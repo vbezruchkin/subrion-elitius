@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package name="affiliates">
+	<title>Affiliates</title>
+	<summary>This software adds an ability to track affiliate activity.</summary>
+	<author>Intelliants LLC</author>
+	<contributor>Intelliants LLC</contributor>
+	<version>3.1.0</version>
+	<date>2013-12-25</date>
+	<compatibility>3.1.0</compatibility>
+	<url>affiliates</url>
+
+	<packageitems>
+		<item table_name="affiliates_products" payable="0">products</item>
+		<item table_name="affiliates_banners" payable="0">banners</item>
+		<item table_name="affiliates_ads" payable="0">ads</item>
+		<item table_name="affiliates_commissions" payable="0">commissions</item>
+	</packageitems>
+
+	<actions>
+		<action name="aff_products" url="affiliates/products/" icon="list" show="" status="admin" pages="aff_accounts_history,aff_products_add,aff_products_edit">Products</action>
+		<action name="aff_products_add" url="affiliates/products/add/" icon="plus-alt" order="2" show="" status="admin" pages="aff_products,aff_products_edit">Add Product</action>
+
+		<action name="aff_ads" url="affiliates/ads/" icon="list" show="" status="admin" pages="aff_banners_add,aff_ads_edit">Text Ads</action>
+		<action name="aff_ads_add" url="affiliates/ads/add/" icon="plus-alt" order="2" show="" status="admin" pages="aff_ads,aff_ads_edit">Add Ads</action>
+
+		<action name="aff_banners" url="affiliates/banners/" icon="list" show="" status="admin" pages="aff_banners_add,aff_banners_edit">Banners</action>
+		<action name="aff_banners_add" url="affiliates/banners/add/" icon="plus-alt" order="2" show="" status="admin" pages="aff_banners,aff_banners_edit">Add Banner</action>
+
+		<action name="aff_commissions" url="affiliates/commissions/" icon="list" show="" status="admin" pages="aff_commissions_add,aff_commissions_edit">Commissions</action>
+		<action name="aff_commissions_add" url="affiliates/commissions/add/" icon="plus-alt" order="2" show="" status="admin" pages="aff_commissions,aff_commissions_edit">Add Commission</action>
+	</actions>
+
+	<groups>
+		<group name="affiliates">Affiliates</group>
+	</groups>
+
+	<adminpages>
+		<page group="affiliates" name="affiliates_stats" url="affiliates/" menus="menu" filename="statistics">Statistics</page>
+		<page group="affiliates" name="aff_manage_tiers" url="affiliates/tiers/" menus="menu" filename="tiers">Tier levels</page>
+		<page group="affiliates" name="aff_visitors" url="affiliates/visitors/" menus="menu" filename="visitors">Traffic logs</page>
+
+		<page group="affiliates" menus="menu">Management</page>
+		<page group="affiliates" name="aff_products" menus="menu" url="affiliates/products/" filename="products">Products</page>
+		<page group="affiliates" name="aff_products_add" url="affiliates/products/add/" filename="products" parent="aff_products" action="add">Add Product</page>
+		<page group="affiliates" name="aff_products_edit" url="affiliates/products/edit/" filename="products" parent="aff_products" action="edit">Edit Product</page>
+
+		<page group="affiliates" name="aff_banners" menus="menu" url="affiliates/banners/" filename="banners">Banners</page>
+		<page group="affiliates" name="aff_banners_add" url="affiliates/banners/add/" filename="banners" parent="aff_banners" action="add">Add Banner</page>
+		<page group="affiliates" name="aff_banners_edit" url="affiliates/banners/edit/" filename="banners" parent="aff_banners" action="edit">Edit Banner</page>
+
+		<page group="affiliates" name="aff_ads" menus="menu" url="affiliates/ads/" filename="ads">Text ads</page>
+		<page group="affiliates" name="aff_ads_add" url="affiliates/ads/add/" filename="ads" parent="aff_ads" action="add">Add Ad</page>
+		<page group="affiliates" name="aff_ads_edit" url="affiliates/ads/edit/" filename="ads" parent="aff_ads" action="edit">Edit Ad</page>
+
+		<page group="affiliates" name="aff_commissions" menus="menu" url="affiliates/commissions/" filename="commissions">Commissions</page>
+		<page group="affiliates" name="aff_commissions_add" url="affiliates/commissions/add/" filename="commissions" parent="aff_commissions" action="add">Add Commission</page>
+		<page group="affiliates" name="aff_commissions_edit" url="affiliates/commissions/edit/" filename="commissions" parent="aff_commissions" action="edit">Edit Commission</page>
+
+		<page group="affiliates" menus="menu">Finances</page>
+		<page group="affiliates" name="aff_commissions_current" menus="menu" url="affiliates/commissions/current/" filename="commissions">Current commissions</page>
+		<page group="affiliates" name="aff_pay_affiliates" menus="menu" url="affiliates/pay/" filename="pay">Pay affiliates</page>
+		<page group="affiliates" name="aff_accounts_history" menus="menu" url="affiliates/members/history/" filename="account_history">Accounts history</page>
+	</adminpages>
+
+	<configgroup name="affiliates">Affiliates</configgroup>
+	<config group="affiliates" name="aff_company_name" type="text" description="Company name">Company Name</config>
+	<config group="affiliates" name="aff_incoming_page" type="text" title="" description="Incoming traffic page"><![CDATA[]]></config>
+	<config group="affiliates" name="aff_pay_day" multiplevalues="1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,11th,12th,13th,14th,15th,16th,17th,18th,19th,20th,21st,22nd,23rd,24th,25th,26th,27th,28th,29th,30th,31st" type="select" description="Pay day">1st</config>
+	<config group="affiliates" name="aff_credit_style" multiplevalues="'Last To Send Visitor Gets Credits','First To Send Visitor Gets Credits'" type="select" description="Crediting style">1</config>
+	<config group="affiliates" name="aff_use_muti_tier" multiplevalues="'1','0'" type="radio" description="Use multi tier">1</config>
+	<config group="affiliates" name="aff_auto_approve_affiliate" multiplevalues="'1','0'" type="radio" description="Auto approve affiliates">0</config>
+	<config group="affiliates" name="aff_payout_percent" type="text" description="Payout level (%)">10</config>
+	<config group="affiliates" name="aff_payout_balance" type="text" description="Payout balance required">10</config>
+
+	<hooks>
+		<hook name="phpUsersRegisterAfterAll" type="php">
+			<![CDATA[
+if (isset($_POST['username']) && isset($_COOKIE['txp']))
+{
+	$iaXp = $iaCore->factoryPackage('elitius', 'affiliates', iaCore::ADMIN);
+	$iaDb->update(array('parent' => $iaXp->getTierAffIdByCookie($_COOKIE['txp'])), "`username` = '{$_POST['username']}'", array(), 'members');
+}
+			]]>
+		</hook>
+
+		<hook name="smartyAdminAfterHeadSection" type="smarty">
+			<![CDATA[
+<style type="text/css">
+	i.i-affiliates {
+		font-family: 'Subrion';
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+	}
+	i.i-affiliates:before {
+		content: '\e00b';
+	}
+</style>
+			]]>
+		</hook>
+	</hooks>
+
+	<pages>
+		<page readonly="1" url="|PACKAGE|" name="affiliates_home" menus="main,account" service="1">General Statistics</page>
+		<page readonly="1" url="|PACKAGE|track/" name="affiliates_tracking" filename="tracking" service="1">Tracking</page>
+		<page readonly="1" url="|PACKAGE|exp/" name="affiliates_reffer" filename="xp" service="1">eLitius</page>
+		<page readonly="1" url="|PACKAGE|pgw/" name="affiliates_pgw" filename="pgw" service="1">Payment gateway</page>
+		<page readonly="1" url="|PACKAGE|txp/" name="affiliates_tierreffer" filename="txp" service="1">eLitius</page>
+		<page readonly="1" url="|PACKAGE|ads/" name="affiliates_ads" filename="ads" service="1">eLitius</page>
+		<page readonly="1" url="|PACKAGE|xpads/" name="affiliates_javascript" filename="xpads" service="1">eLitius</page>
+		<page readonly="1" url="|PACKAGE|payments/" name="affiliates_payments" filename="payments" menus="account" service="1">Payment history</page>
+		<page readonly="1" url="|PACKAGE|commissions/" name="affiliates_commissions" filename="commissions" menus="account" service="1">Commission Details</page>
+		<page readonly="1" url="|PACKAGE|banners/" name="affiliates_banners" filename="banners" menus="elitius" service="1">Banners</page>
+		<page readonly="1" url="|PACKAGE|ads/text/" name="affiliates_text_ads" filename="banners" menus="elitius" service="1">Text Ads</page>
+		<page readonly="1" url="|PACKAGE|ads/links/" name="affiliates_text_links" filename="banners" menus="elitius" service="1">Text Links</page>
+		<page readonly="1" url="|PACKAGE|ads/email/" name="affiliates_email_links" filename="banners" menus="elitius" service="1">Email Links</page>
+	</pages>
+
+	<phrases>
+		<phrase category="frontend" key="source_code">Source Code: click [Select ALL] button then copy selected text into your email</phrase>
+		<phrase category="frontend" key="banner_code">Banner Code (Copy and Paste to your website)</phrase>
+		<phrase category="frontend" key="ad_desc">Ad description</phrase>
+		<phrase category="frontend" key="ads">Text Ads</phrase>
+		<phrase category="frontend" key="banners">Banners</phrase>
+		<phrase category="frontend" key="payment_history">Payment history</phrase>
+		<phrase category="frontend" key="banner_name">Banner Details</phrase>
+		<phrase category="frontend" key="banner_desc">Banner Description</phrase>
+		<phrase category="frontend" key="banner_details">Banner Description</phrase>
+		<phrase category="frontend" key="email_links">Email Links</phrase>
+		<phrase category="frontend" key="commission_details">Commission details</phrase>
+		<phrase category="frontend" key="general_statistics">General statistics</phrase>
+		<phrase category="frontend" key="earnings">Earnings</phrase>
+		<phrase category="frontend" key="visits">Visits</phrase>
+		<phrase category="frontend" key="unique_visitors">Unique Visitors</phrase>
+		<phrase category="frontend" key="sales">Sales</phrase>
+		<phrase category="frontend" key="sales_ratio">Sales Ratio</phrase>
+		<phrase category="frontend" key="traffic_stat">Traffic Statistics</phrase>
+		<phrase category="frontend" key="pending_approval">Pending</phrase>
+		<phrase category="frontend" key="approved">Approved</phrase>
+		<phrase category="frontend" key="text_links">Text Links</phrase>
+		<phrase category="frontend" key="product_link">Product Link</phrase>
+		<phrase category="frontend" key="affiliate_link">Affiliate Link</phrase>
+		<phrase category="frontend" key="site_title">eLitius Affiliate Program</phrase>
+		<phrase category="frontend" key="join_aff">Become eLitius Affiliate!</phrase>
+		<phrase category="frontend" key="history_clear">Your Payment History Is Clear (No payouts were made yet)</phrase>
+		<phrase category="frontend" key="return_go_back">Go Back</phrase>
+		<phrase category="frontend" key="small_view_details">View details</phrase>
+		<phrase category="frontend" key="msh_incorrect_param">Error! Incorrect parameter.</phrase>
+
+		<phrase category="common" key="history_clear">Your Payment History Is Clear (No payouts were made yet)</phrase>
+		<phrase category="common" key="sale_date">Sale date</phrase>
+		<phrase category="common" key="sale_amount">Sale amount</phrase>
+		<phrase category="common" key="total_sales">Sale total</phrase>
+		<phrase category="common" key="time">Time</phrase>
+		<phrase category="common" key="payout_amount">Commission</phrase>
+		<phrase category="common" key="payment_id">Payment ID</phrase>
+		<phrase category="common" key="field_payout">Commission</phrase>
+		<phrase category="common" key="affiliate">Affiliate</phrase>
+		<phrase category="common" key="products">Products</phrase>
+		<phrase category="common" key="commissions">Commissions</phrase>
+		<phrase category="common" key="product_name">Product Name</phrase>
+		<phrase category="common" key="ad_text">Ad text</phrase>
+		<phrase category="common" key="ad_title">Ad title</phrase>
+		<phrase category="common" key="ad_preview">Text ad preview</phrase>
+
+		<phrase category="admin" key="affiliates_package">"Affiliates" Package</phrase>
+		<phrase category="admin" key="pay_level">Pay level</phrase>
+		<phrase category="admin" key="payout_amount">Payout Amount</phrase>
+		<phrase category="admin" key="add_payout_level">Add Payout Level</phrase>
+		<phrase category="admin" key="payout_level">Payout level</phrase>
+		<phrase category="admin" key="payout_percentage">Pay level</phrase>
+		<phrase category="admin" key="last_payment">Last Payment</phrase>
+		<phrase category="admin" key="average_payment">Average Payment</phrase>
+		<phrase category="admin" key="total_payments">Total Payments</phrase>
+		<phrase category="admin" key="ads">Text Ads</phrase>
+		<phrase category="admin" key="banners">Banners</phrase>
+		<phrase category="admin" key="commissions_activity">Commission activity</phrase>
+		<phrase category="admin" key="traffic_activity">Incoming traffic activity</phrase>
+		<phrase category="admin" key="current_commissions">Current Commissions</phrase>
+		<phrase category="admin" key="account_history">Account history</phrase>
+		<phrase category="admin" key="payment_history">Payment history</phrase>
+		<phrase category="admin" key="ad_added">Text ads has been added successfully.</phrase>
+		<phrase category="admin" key="banner_added">Banner has been added successfully.</phrase>
+		<phrase category="admin" key="product_added">Product has been added successfully.</phrase>
+		<phrase category="admin" key="commission_added">Commission has been added successfully.</phrase>
+		<phrase category="admin" key="tier_level">Tier levels</phrase>
+		<phrase category="admin" key="level">Level</phrase>
+		<phrase category="admin" key="add_tiers">Add tiers</phrase>
+		<phrase category="admin" key="tier_level">Tier levels</phrase>
+
+		<phrase category="tooltip" key="payout_percent">Payout Level shows what percentage the affiliate earns</phrase>
+		<phrase category="tooltip" key="incoming_page">Your site incoming traffic page (by default), usually: http://www.yoursite.com/index.php or html</phrase>
+		<phrase category="tooltip" key="credit_style">This Option lets you set which affiliate gets credits first or last one</phrase>
+		<phrase category="tooltip" key="pay_day">Pay Day (day of the month)', 20, 'Pay Day - day of the month when your affiliates is paid</phrase>
+		<phrase category="tooltip" key="company_name">Enter your Company name</phrase>
+	</phrases>
+
+	<fields_groups>
+		<group item="products" name="general" title="General"><![CDATA[]]></group>
+		<group item="banners" name="general" title="General"><![CDATA[]]></group>
+		<group item="commissions" name="general" title="General"><![CDATA[]]></group>
+		<group item="members" name="affiliates" title="Affiliate Information" tabview="1">Please input your details to setup affiliate account.</group>
+	</fields_groups>
+
+	<fields>
+		<field item="members" group="affiliates" name="country" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Country</field>
+		<field item="members" group="affiliates" name="state" type="combo" page="profile,view_member" values="AK||Alaska,AL||Alabama,AR||Arkansas,AZ||Arizona,CA||California,CO||Colorado,CT||Connecticut,DC||District Of Columbia,DE||Delaware,FL||Florida,GA||Georgia,HI||Hawaii,IA||Iowa,ID||Idaho,IL||Illinois,IN||Indiana,KS||Kansas,KY||Kentucky,LA||Louisiana,MA||Massachusetts,MD||Maryland,ME||Maine,MI||Michigan,MN||Minnesota,MO||Missouri,MS||Mississippi,MT||Montana,NC||North Carolina,ND||North Dakota,NE||Nebraska,NH||New Hampshire,NJ||New Jersey,NM||New Mexico,NV||Nevada,NY||New York,OH||Ohio,OK||Oklahoma,OR||Oregon,PA||Pennsylvania,RI||Rhode Island,SC||South Carolina,SD||South Dakota,TN||Tennessee,TX||Texas,UT||Utah,VA||Virginia,VT||Vermont,WA||Washington,WI||Wisconsin,WV||West Virginia,WY||Wyoming" searchable="1">State</field>
+		<field item="members" group="affiliates" name="city" type="text" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">City</field>
+		<field item="members" group="affiliates" name="address" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Address</field>
+		<field item="members" group="affiliates" name="company" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Company</field>
+		<field item="members" group="affiliates" name="taxid" type="text" length="50" default="0" page="member_registration,profile,view_member" searchable="0" adminonly="1" editable="0">Tax id</field>
+		<field item="members" group="affiliates" name="paypal_email" type="text" length="100" page="profile,view_member" searchable="0" editable="0">Paypal email</field>
+		<field item="members" group="affiliates" name="phone" type="text" length="40" page="member_registration,profile,view_member" searchable="0" editable="0">Phone</field>
+		<field item="members" group="affiliates" name="fax" type="text" length="40" page="member_registration,profile,view_member" searchable="0" editable="0">Fax</field>
+		<field item="members" group="affiliates" name="url" type="text" page="profile,view_member" searchable="0" editable="0">Url</field>
+		<field item="members" group="affiliates" name="check" type="text" length="64" searchable="0" adminonly="1" editable="0">Check</field>
+		<field item="members" group="affiliates" name="hits" type="number" default="0" searchable="0" adminonly="1" editable="0">Hits</field>
+		<field item="members" group="affiliates" name="sales" type="number" default="0" searchable="0" adminonly="1" editable="0">Sales</field>
+		<field item="members" group="affiliates" name="parent" type="number" default="0" searchable="0" adminonly="1" editable="0">Parent</field>
+		<field item="members" group="affiliates" name="level" type="number" default="0" searchable="0" adminonly="1" editable="0">Level</field>
+
+		<field item="products" group="general" name="title" type="text" length="50" searchable="1" required="1" editable="0">Title</field>
+		<field item="products" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
+		<field item="products" group="general" name="amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Amount</field>
+		<field item="products" group="general" name="url" type="text" length="255" searchable="0" editable="0">Redirect URL</field>
+		<field item="products" group="general" name="commission_type" type="combo" values="%||%,$||$" default="%" searchable="0" required="1" editable="0">Commissions type</field>
+		<field item="products" group="general" name="auto" type="radio" values="1||Yes,0||No" default="1" searchable="0" editable="0">Auto-approve commissions</field>
+
+		<field item="banners" group="general" name="title" type="text" length="50" searchable="1" required="1" editable="0">Title</field>
+		<field item="banners" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
+		<field item="banners" group="general" name="image" type="image" required="1">Image</field>
+
+		<field item="commissions" group="general" name="sale_amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Sale amount</field>
+		<field item="commissions" group="general" name="payout_amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Payout amount</field>
+		<field item="commissions" group="general" name="sale_date" type="date" length="50" searchable="1" required="1" editable="0">Sell date</field>
+		<field item="commissions" group="general" name="order_number" type="text" length="64" searchable="0" required="1" editable="0">Order number (Transaction ID)</field>
+	</fields>
+
+	<install>
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_visitors` (
+	`id` int(11) NOT NULL auto_increment,
+	`salt` varchar(64) NOT NULL default '',
+	`member_id` int(11) NOT NULL default '0',
+	`product_id` int(11) NOT NULL default '0',
+	`referrer` varchar(255) NOT NULL default '',
+	`datetime` datetime NULL,
+	`tier` enum('0','1') NOT NULL default '0',
+	PRIMARY KEY (`id`),
+	KEY `member_id` (`product_id`, `member_id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_commissions` (
+	`id` int(11) NOT NULL auto_increment,
+	`member_id` int(11) NOT NULL default '0',
+	`tier_aff_id` int(11) NOT NULL default '0',
+	`percentage` varchar(4) NOT NULL default '',
+	`type_commission` varchar(10) NOT NULL default '',
+	`status` enum('active', 'pending', 'refunded', 'failed') NOT NULL default 'pending',
+	`tracking` varchar(64) NOT NULL default '',
+	`merchant` varchar(32) NOT NULL default '',
+	`date_added` datetime NOT NULL,
+	`date_modified` datetime NOT NULL,
+	`ip` bigint(12) NOT NULL,
+	PRIMARY KEY  (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_products` (
+	`id` int(11) NOT NULL auto_increment,
+	`member_id` int(11) NOT NULL default '0',
+	`status` enum('active', 'inactive') NOT NULL default 'inactive',
+	`date_added` datetime NOT NULL,
+	`date_modified` datetime NOT NULL,
+	PRIMARY KEY  (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_banners` (
+	`id` int(11) NOT NULL auto_increment,
+	`product_id` int(11) NOT NULL default '0',
+	`status` enum('active', 'inactive') NOT NULL default 'inactive',
+	`x` int(10) NOT NULL default '0',
+	`y` int(10) NOT NULL default '0',
+	`path` varchar(64) NOT NULL default '',
+	`date_added` datetime NOT NULL,
+	`date_modified` datetime NOT NULL,
+	PRIMARY KEY  (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_ads` (
+	`id` int(10) NOT NULL auto_increment,
+	`product_id` int(11) NOT NULL default '0',
+	`title` varchar(64) NOT NULL default '',
+	`content` text NOT NULL,
+	`status` enum('active', 'inactive') NOT NULL default 'inactive',
+	`date_added` datetime NOT NULL,
+	`date_modified` datetime NOT NULL,
+	PRIMARY KEY  (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_payments` (
+	`id` int(11) NOT NULL auto_increment,
+	`member_id` int(10) NOT NULL default '0',
+	`sales` decimal(10,2) NOT NULL default '0.00',
+	`commission` decimal(10,2) NOT NULL default '0.00',
+	`date_added` datetime NOT NULL,
+	`date_modified` datetime NOT NULL,
+	`ip` bigint(12) NOT NULL,
+	PRIMARY KEY  (`id`),
+	UNIQUE KEY `id` (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_tier_levels` (
+	`id` int( 10 ) NOT NULL AUTO_INCREMENT ,
+	`level` int( 10 ) NOT NULL default '0',
+	`amt` decimal( 10, 2 ) NOT NULL default '0.00',
+PRIMARY KEY ( `id` ) 
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+INSERT INTO `{prefix}affiliates_tier_levels` VALUES (1, 1, 18.00), (2, 2, 10.00), (3, 3, 5.00);
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+CREATE TABLE `{prefix}affiliates_paylevels` (
+	`id` int(10) NOT NULL auto_increment,
+	`level` int(10) NOT NULL default '0',
+	`amount` decimal(10,2) NOT NULL default '0.00',
+	PRIMARY KEY  (`id`)
+) {mysql_version};
+			]]>
+		</sql>
+
+		<sql>
+			<![CDATA[
+INSERT INTO `{prefix}affiliates_paylevels` VALUES (1, 1, 30.00), (2, 2, 40.00), (3, 3, 60.00);
+			]]>
+		</sql>
+	</install>
+
+	<uninstall>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_products`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_visitors`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_banners`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_commissions`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_tier_levels`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_paylevels`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_ads`;]]></sql>
+		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_payments`;]]></sql>
+	</uninstall>
+</package>
