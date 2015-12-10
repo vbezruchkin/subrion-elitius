@@ -13,7 +13,7 @@ foreach($dirs as $dirname)
 {
 	if($dirname != '.' && $dirname != '..')
 	{
-		if(file_exists($file . $dirname . IA_DS.'ipn.php'))
+		if(file_exists($file . $dirname . IA_DS . 'ipn.php'))
 		{
 			$gateways[] = $dirname;
 		}

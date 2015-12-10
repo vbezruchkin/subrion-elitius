@@ -1,7 +1,7 @@
-{include file="box-header.tpl" title=$gTitle}
 <form action="{$smarty.const.IA_SELF}" method="post" name="adminForm">
 	{preventCsrf}
-	<table width="100%"><tbody><tr>
+	<table width="100%">
+		<tbody><tr>
 		<td valign="top" width="60%">
 			<table class="common">
 			<tbody>
@@ -52,7 +52,7 @@
 					<td>{lang key="number_sales"}:</td>
 					<td>{$commission.Sales}</td>
 				</tr>
-				<tr style="font-weight: bold;">					
+				<tr style="font-weight: bold;">
 					<th colspan="2">{lang key="sales_this_payment"}:</th>
 				</tr>
 				<tr><td colspan=2>
@@ -79,6 +79,7 @@
 	<input name="action" value="arhive" type="hidden" />
 	<center><input type="submit" name="submit" value="{lang key='pay_to_archive'}"/></center>
 </form>
+
 <table style="width: 100%;">
 	<tr>
 		<td style="text-align: center;">
@@ -98,4 +99,3 @@
 		</td>
 	</tr>
 </table>
-{include file="box-footer.tpl"}

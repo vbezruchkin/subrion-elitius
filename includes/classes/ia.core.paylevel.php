@@ -3,7 +3,6 @@
 
 class iaPaylevel extends iaModel
 {
-	
 	function getPayLevels($level='')
 	{
 		$sql  = "SELECT * FROM `{$this->mPrefix}paylevels` ";
@@ -105,5 +104,4 @@ class iaPaylevel extends iaModel
 
 		return $this->iaDb->getOne($sql);
 	}
-	
 }

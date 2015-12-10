@@ -1,22 +1,6 @@
 <?php
 class iaElitius extends iaModel
 {
-	function addSale($sale)
-	{
-		$sql  = "INSERT INTO `{$this->mPrefix}sales` ";
-		$sql .= "SET `aff_id`='{$sale['aff_id']}',`date`='{$sale['year']}-{$sale['month']}-{$sale['day']}',`payment`='{$sale['payment']}',`payout`='{$sale['payout']}',`order_number`='{$sale['order_number']}' ";
-
-		return $this->iaDb->query($sql);
-	}
-	
-	function getAffiliateById($aId)
-	{
-		$sql  = "SELECT * FROM `{$this->mPrefix}accounts` ";
-		$sql .= "WHERE `id`='{$aId}'";
-
-		return $this->iaDb->getRow($sql);
-	}
-	
 	function getAccountsToBePaid($aStart, $aLimit)
 	{
 		$iaCore = &iaCore::instance();

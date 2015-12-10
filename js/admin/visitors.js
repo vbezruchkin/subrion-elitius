@@ -4,12 +4,12 @@ Ext.onReady(function()
 	{
 		columns: [
 			'selection',
-			{name: 'member', title: _t('member'), width: 2},
+			{name: 'member', title: _t('member'), width: 1},
+			{name: 'product', title: _t('product'), width: 2},
 			{name: 'salt', title: _t('visitor_id'), width: 220},
-			{name: 'product', title: _t('product'), width: 220},
 			{name: 'referrer', title: _t('refererring_url'), width: 220},
-			{name: 'datetime', title: _t('date'), width: 120},
-			{name: 'ip', title: _t('ip_address'), width: 120},
+			{name: 'datetime', title: _t('date'), width: 100},
+			{name: 'ip', title: _t('ip_address'), width: 100},
 			{name: 'status', title: _t('status'), width: 120},
 			'delete'
 		],

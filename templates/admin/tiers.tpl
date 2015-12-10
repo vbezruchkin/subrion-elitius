@@ -25,7 +25,7 @@
 	{include file="box-footer.tpl"}
 </div>
 <div style="float:left;width:48%;padding:5px;">
-	{include file="box-header.tpl" title=$lang.add_tiers}
+	<h2>{lang key='add_tiers'}</h2>
 		<form action="{$smarty.const.IA_SELF}" method="post">
 			{preventCsrf}
 			<table cellpadding="0" cellspacing="0" width="100%" class="common">
@@ -58,5 +58,4 @@
 				</tr>
 			</table>
 		</form>
-	{include file="box-footer.tpl"}
 </div>

@@ -1,4 +1,5 @@
 <?php
+//##copyright##
 
 class iaVisitor extends abstractAffiliatesPackageFront
 {
@@ -32,6 +33,20 @@ class iaVisitor extends abstractAffiliatesPackageFront
 		$this->iaDb->resetTable();
 
 		return true;
+	}
+
+	/**
+	 * Get visitors log
+	 *
+	 * @param int $member member id
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return mixed
+	 */
+	public function getVisitors($member, $start = 0, $limit = 10)
+	{
+		return $this->iaDb->all(iaDb::ALL_COLUMNS_SELECTION, iaDb::convertIds($member, 'member_id'), 0, 10, self::getTable());
 	}
 
 	function addTierCredit($aId, $aDate, $aTime, $aPayout, $aTierNumber, $aSetme, $aIpAddress)
@@ -105,15 +120,6 @@ class iaVisitor extends abstractAffiliatesPackageFront
 		}
 	}
 
-	function getVisitorsCount($aAff)
-	{
-		$sql  = "SELECT COUNT(*) ";
-		$sql .= "FROM `{$this->mPrefix}tracking` ";
-		$sql .= "WHERE `aff_id` = '{$aAff['id']}'";
-
-		return $this->iaDb->getOne($sql);
-	}
-	
 	function getSalesCount($aAff)
 	{
 		$sql  = "SELECT COUNT(*) ";
@@ -130,15 +136,6 @@ class iaVisitor extends abstractAffiliatesPackageFront
 		$sql .= "WHERE `aff_id` = '{$aAff['id']}' AND `status` = 'active'";
 
 		return $this->iaDb->getOne($sql);
-	}
-
-	function getAffiliateInfo($aAff)
-	{
-		$sql  = "SELECT * ";
-		$sql .= "FROM `{$this->mPrefix}accounts` ";
-		$sql .= "WHERE `id` = '{$aAff['id']}' ";
-
-		return $this->iaDb->getRow($sql);
 	}
 
 	function addSale($aId, $aPayment/*, $aAproved=0*/, $aUid, $aOrder/*, $aTrackingId*/, $aMerchant)
@@ -161,15 +158,6 @@ class iaVisitor extends abstractAffiliatesPackageFront
 		$sql .= "VALUES ('{$aId}', NOW(), NOW(), '{$aPayment}', '{$payOut}', '1', '{$aUid}', '{$aOrder}', '0', '{$aMerchant}')";
 
 		return $this->iaDb->query($sql);
-	}
-
-	function getProductByID($aId)
-	{
-		$sql  = "SELECT * ";
-		$sql .= "FROM `{$this->mPrefix}products` ";
-		$sql .= "WHERE `id` = '{$aId}' LIMIT 1";
-
-		return $this->iaDb->getRow($sql);
 	}
 
 	function addAffiliateSale($aId)
@@ -200,33 +188,5 @@ class iaVisitor extends abstractAffiliatesPackageFront
 		$sql .= $aLimit ? "LIMIT {$aStart}, {$aLimit}" : '';
 
 		return $this->iaDb->getAll($sql);
-	}
-
-	function getCommissionsById($aUserId, $aId)
-	{
-		$sql  = "SELECT * FROM `{$this->mPrefix}sales` ";
-		$sql .= "WHERE  `id` = '{$aId}' ";
-		$sql .= "AND `aff_id` = '{$aUserId}' ";
-		$sql .= "LIMIT 1";
-
-		return $this->iaDb->getRow($sql);
-	}
-
-	function getPaidCommissions()
-	{
-		$sql  = "SELECT * FROM `{$this->mPrefix}payments` ";
-		//		$sql .= "WHERE `approved` = '{$aStatus}' ";
-		//		$sql .= "AND `id` > 0 ";
-
-		return $this->iaDb->getAll($sql);
-	}
-	
-	function getNonApprovedSalesCount($aAff)
-	{
-		$sql  = "SELECT COUNT(*) ";
-		$sql .= "FROM `{$this->mPrefix}sales` ";
-		$sql .= "WHERE `aff_id` = '{$aAff['id']}' AND `status` = 'approval'";
-
-		return $this->iaDb->getOne($sql);
 	}
 }

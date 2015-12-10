@@ -46,14 +46,16 @@
 	</adminpages>
 
 	<pages>
-		<page group="affiliates" readonly="1" url="|PACKAGE|" name="affiliates_home" menus="main,account" service="1">General Statistics</page>
+		<page group="affiliates" readonly="1" url="|PACKAGE|" name="affiliates_home" menus="account" service="1">General Statistics</page>
+		<page group="affiliates" url="|PACKAGE|commissions/" name="affiliates_commissions" filename="index" menus="account">Commissions</page>
+		<page group="affiliates" url="|PACKAGE|payments/" name="affiliates_payments" filename="index" menus="account">Payments</page>
+		<page group="affiliates" url="|PACKAGE|traffic/" name="affiliates_traffic" filename="index" menus="account">Traffic log</page>
+
 		<page group="affiliates" readonly="1" url="|PACKAGE|track/" name="affiliates_tracking" filename="tracking" service="1">Tracking</page>
 		<page group="affiliates" readonly="1" url="|PACKAGE|exp/" name="affiliates_reffer" filename="xp" service="1">eLitius</page>
 		<page group="affiliates" readonly="1" url="|PACKAGE|pgw/" name="affiliates_pgw" filename="pgw" service="1">Payment gateway</page>
 		<page group="affiliates" readonly="1" url="|PACKAGE|txp/" name="affiliates_tierreffer" filename="txp" service="1">eLitius</page>
 		<page group="affiliates" readonly="1" url="|PACKAGE|xpads/" name="affiliates_javascript" filename="xpads" service="1">eLitius</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|payments/" name="affiliates_payments" filename="payments" menus="account" service="1">Payment history</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|commissions/" name="affiliates_commissions" filename="commissions" menus="account" service="1">Commission Details</page>
 		<page group="affiliates" readonly="1" url="|PACKAGE|banners/" name="affiliates_banners" filename="banners" menus="elitius" service="1">Banners</page>
 	</pages>
 
@@ -137,6 +139,7 @@ if (isset($_POST['username']) && isset($_COOKIE['txp']))
 		<phrase category="common" key="payout_amount">Commission</phrase>
 		<phrase category="common" key="payment_id">Payment ID</phrase>
 		<phrase category="common" key="visitor_id">Visitor ID</phrase>
+		<phrase category="common" key="redirect_url">Redirect URL</phrase>
 		<phrase category="common" key="refererring_url">Referring URL</phrase>
 		<phrase category="common" key="field_payout">Commission</phrase>
 		<phrase category="common" key="affiliate">Affiliate</phrase>
@@ -182,38 +185,38 @@ if (isset($_POST['username']) && isset($_COOKIE['txp']))
 	</fields_groups>
 
 	<fields>
-		<field item="members" group="affiliates" name="country" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Country</field>
+		<field item="members" group="affiliates" name="country" type="text" length="64" page="member_registration,profile,view_member" required="1">Country</field>
 		<field item="members" group="affiliates" name="state" type="combo" page="profile,view_member" values="AK||Alaska,AL||Alabama,AR||Arkansas,AZ||Arizona,CA||California,CO||Colorado,CT||Connecticut,DC||District Of Columbia,DE||Delaware,FL||Florida,GA||Georgia,HI||Hawaii,IA||Iowa,ID||Idaho,IL||Illinois,IN||Indiana,KS||Kansas,KY||Kentucky,LA||Louisiana,MA||Massachusetts,MD||Maryland,ME||Maine,MI||Michigan,MN||Minnesota,MO||Missouri,MS||Mississippi,MT||Montana,NC||North Carolina,ND||North Dakota,NE||Nebraska,NH||New Hampshire,NJ||New Jersey,NM||New Mexico,NV||Nevada,NY||New York,OH||Ohio,OK||Oklahoma,OR||Oregon,PA||Pennsylvania,RI||Rhode Island,SC||South Carolina,SD||South Dakota,TN||Tennessee,TX||Texas,UT||Utah,VA||Virginia,VT||Vermont,WA||Washington,WI||Wisconsin,WV||West Virginia,WY||Wyoming" searchable="1">State</field>
-		<field item="members" group="affiliates" name="city" type="text" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">City</field>
-		<field item="members" group="affiliates" name="address" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Address</field>
-		<field item="members" group="affiliates" name="company" type="text" length="64" page="member_registration,profile,view_member" searchable="0" required="1" editable="0">Company</field>
-		<field item="members" group="affiliates" name="taxid" type="text" length="50" default="0" page="member_registration,profile,view_member" searchable="0" adminonly="1" editable="0">Tax id</field>
-		<field item="members" group="affiliates" name="paypal_email" type="text" length="100" page="profile,view_member" searchable="0" editable="0">Paypal email</field>
-		<field item="members" group="affiliates" name="phone" type="text" length="40" page="member_registration,profile,view_member" searchable="0" editable="0">Phone</field>
-		<field item="members" group="affiliates" name="fax" type="text" length="40" page="member_registration,profile,view_member" searchable="0" editable="0">Fax</field>
-		<field item="members" group="affiliates" name="url" type="text" page="profile,view_member" searchable="0" editable="0">Url</field>
-		<field item="members" group="affiliates" name="check" type="text" length="64" searchable="0" adminonly="1" editable="0">Check</field>
-		<field item="members" group="affiliates" name="hits" type="number" default="0" searchable="0" adminonly="1" editable="0">Hits</field>
-		<field item="members" group="affiliates" name="sales" type="number" default="0" searchable="0" adminonly="1" editable="0">Sales</field>
-		<field item="members" group="affiliates" name="parent" type="number" default="0" searchable="0" adminonly="1" editable="0">Parent</field>
-		<field item="members" group="affiliates" name="level" type="number" default="0" searchable="0" adminonly="1" editable="0">Level</field>
+		<field item="members" group="affiliates" name="city" type="text" page="member_registration,profile,view_member" required="1">City</field>
+		<field item="members" group="affiliates" name="address" type="text" length="64" page="member_registration,profile,view_member" required="1">Address</field>
+		<field item="members" group="affiliates" name="company" type="text" length="64" page="member_registration,profile,view_member" required="1">Company</field>
+		<field item="members" group="affiliates" name="taxid" type="text" length="50" default="0" page="member_registration,profile,view_member" adminonly="1">Tax id</field>
+		<field item="members" group="affiliates" name="paypal_email" type="text" length="100" page="profile,view_member">Paypal email</field>
+		<field item="members" group="affiliates" name="phone" type="text" length="40" page="member_registration,profile,view_member">Phone</field>
+		<field item="members" group="affiliates" name="fax" type="text" length="40" page="member_registration,profile,view_member">Fax</field>
+		<field item="members" group="affiliates" name="url" type="text" page="profile,view_member">Url</field>
+		<field item="members" group="affiliates" name="check" type="text" length="64" adminonly="1">Check</field>
+		<field item="members" group="affiliates" name="hits" type="number" default="0" adminonly="1">Hits</field>
+		<field item="members" group="affiliates" name="sales" type="number" default="0" adminonly="1">Sales</field>
+		<field item="members" group="affiliates" name="parent" type="number" default="0" adminonly="1">Parent</field>
+		<field item="members" group="affiliates" name="level" type="number" default="0" adminonly="1">Level</field>
 
-		<field item="products" group="general" name="title" type="text" length="50" searchable="1" required="1" editable="0">Title</field>
+		<field item="products" group="general" name="title" type="text" length="50" searchable="1" required="1">Title</field>
 		<field item="products" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
-		<field item="products" group="general" name="amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Amount</field>
-		<field item="products" group="general" name="url" type="text" length="255" searchable="0" editable="0">Redirect URL</field>
-		<field item="products" group="general" name="commission_type" type="combo" values="%||%,$||$" default="%" searchable="0" required="1" editable="0">Commissions type</field>
-		<field item="products" group="general" name="auto" type="radio" values="1||Yes,0||No" default="1" searchable="0" editable="0">Auto-approve commissions</field>
+		<field item="products" group="general" name="url" type="text" length="255">Redirect URL</field>
+		<field item="products" group="general" name="amount" type="number" default="10" length="50" required="1">Amount</field>
+		<field item="products" group="general" name="commission_type" type="combo" values="%||%,$||$" default="%" required="1">Commissions type</field>
+		<field item="products" group="general" name="auto" type="radio" values="1||Yes,0||No" default="1">Auto-approve commissions</field>
 
-		<field item="banners" group="general" name="type" type="combo" values="banner||Banner,peel||Page peel,text||Text ad,qrcode||QR code" relation="parent">Type</field>
-		<field item="banners" group="general" name="title" type="text" length="50" searchable="1" required="1" editable="0">Title</field>
+		<field item="banners" group="general" name="type" type="combo" values="banner||Banner,peel||Page peel,text||Text ad,qrcode||QR code" relation="parent" required="1">Type</field>
+		<field item="banners" group="general" name="title" type="text" length="50" searchable="1" required="1">Title</field>
 		<field item="banners" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
 		<field item="banners" group="general" name="image" type="image" required="1" relation="dependent" parent="type:banner">Image</field>
 
-		<field item="commissions" group="general" name="sale_amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Sale amount</field>
-		<field item="commissions" group="general" name="payout_amount" type="number" default="10" length="50" searchable="0" required="1" editable="0">Payout amount</field>
-		<field item="commissions" group="general" name="sale_date" type="date" length="50" searchable="1" required="1" editable="0">Sell date</field>
-		<field item="commissions" group="general" name="order_number" type="text" length="64" searchable="0" required="1" editable="0">Order number (Transaction ID)</field>
+		<field item="commissions" group="general" name="sale_amount" type="number" default="10" length="50" required="1">Sale amount</field>
+		<field item="commissions" group="general" name="payout_amount" type="number" default="10" length="50" required="1">Payout amount</field>
+		<field item="commissions" group="general" name="sale_date" type="date" length="50" searchable="1" required="1">Sell date</field>
+		<field item="commissions" group="general" name="order_number" type="text" length="64" required="1">Order number (Transaction ID)</field>
 	</fields>
 
 	<install>
