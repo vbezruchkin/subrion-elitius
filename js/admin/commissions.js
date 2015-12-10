@@ -10,7 +10,7 @@ Ext.onReady(function()
 				'selection',
 				{name: 'product', title: _t('product'), width: 1},
 				{name: 'member', title: _t('member'), width: 1},
-				{name: 'order_number', title: _t('order_number'), width: 200},
+				{name: 'order_number', title: _t('reference_id'), width: 200},
 				{name: 'sale_amount', title: _t('sale_amount'), width: 100},
 				{name: 'payout_amount', title: _t('payout_amount'), width: 100},
 				{name: 'sale_date', title: _t('sale_date'), width: 100},

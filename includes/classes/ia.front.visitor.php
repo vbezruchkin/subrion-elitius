@@ -14,7 +14,9 @@ class iaVisitor extends abstractAffiliatesPackageFront
 			'salt' => $trackingSalt,
 			'member_id' => $memberId,
 			'product_id' => $productId,
-			'referrer' => $visitorReferrer
+			'referrer' => $visitorReferrer,
+			'ip' => iaUtil::getIp(),
+			'status' => self::STATUS_VALID
 		);
 
 		// log visitor

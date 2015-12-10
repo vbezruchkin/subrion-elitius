@@ -55,25 +55,9 @@ if (!empty($_POST))
 
 			if($aff)
 			{
-					
 				$iaXp->addSale($aff['aff_id'], $sum, $uid, $tid, 'PayPal');
 				$iaXp->addAffiliateSale($aff['aff_id']);
-
-				// TODO: send email
-				/*
-				$tpl = $iaXp->getEmailTemplateByKey('admin_new_sale');
-				$subject = $tpl['subject'];
-				$body = $tpl['body'].$tpl['footer'];
-				$body = stripslashes($body);
-
-				$body = str_replace('{your_sitename}',$iaXp->mConfig['site'],$body);
-				$body = str_replace('{your_sitename_link}',$iaXp->mConfig['xpurl'],$body);
-
-				$iaXp->mMailer->sendEmail($iaXp->mConfig['site_email'], $subject, $body, $iaXp->mConfig['site_email'], $iaXp->mConfig['site_email']);
-				*/
 			}
 		}
 	}
 }
-
-?>

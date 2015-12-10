@@ -6,9 +6,11 @@ Ext.onReady(function()
 			'selection',
 			{name: 'member', title: _t('member'), width: 2},
 			{name: 'salt', title: _t('visitor_id'), width: 220},
-			{name: 'product_title', title: _t('product_name'), width: 220},
-			{name: 'referrer', title: _t('referer'), width: 220},
-			{name: 'datetime', title: _t('date'), width: 220},
+			{name: 'product', title: _t('product'), width: 220},
+			{name: 'referrer', title: _t('refererring_url'), width: 220},
+			{name: 'datetime', title: _t('date'), width: 120},
+			{name: 'ip', title: _t('ip_address'), width: 120},
+			{name: 'status', title: _t('status'), width: 120},
 			'delete'
 		],
 		url: intelli.config.admin_url + '/affiliates/visitors/'

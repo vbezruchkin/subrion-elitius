@@ -1,12 +1,13 @@
 <?php
 //##copyright##
 
-class iaCommission extends abstractPackageAdmin implements iaAffiliatesPackage
+class iaCommission extends abstractAffiliatesPackageAdmin
 {
-	static protected $_table = 'affiliates_commissions';
-	static protected $_item = 'commissions';
+	protected static $_table = 'affiliates_commissions';
 
-	public $_statuses = array(iaCore::STATUS_ACTIVE, self::STATUS_PENDING, self::STATUS_REFUNDED, self::STATUS_FAILED);
+	protected $_itemName = 'commissions';
+
+	protected $_activityLog = array('item' => 'commission');
 
 	protected $_moduleUrl = 'affiliates/commissions/';
 

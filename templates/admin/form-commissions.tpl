@@ -23,7 +23,7 @@
 		</div>
 	{/capture}
 
-	{include file='field-type-content-fieldset.tpl' item_sections=$fields_groups isSystem=true}
+	{include file='field-type-content-fieldset.tpl' isSystem=true}
 </form>
 
-{ia_add_media files='js:_IA_URL_packages/affiliates/js/admin/commissions'}
+{ia_hooker name='smartyAdminSubmitItemBeforeFooter'}
