@@ -6,17 +6,13 @@ Ext.onReady(function()
 			'selection',
 			'expander',
 			{name: 'title', title: _t('title'), width: 1, editor: 'text'},
-			{name: 'product_id', title: _t('product'), width: 2},
+			{name: 'product', title: _t('product'), width: 2},
 			'status',
 			'update',
 			'delete'
 		],
 		expanderTemplate: '{description}',
 		fields: ['description'],
-		texts: {
-			delete_single: _t('are_you_sure_to_delete_this_banner'),
-			delete_multiple: _t('are_you_sure_to_delete_selected_banners')
-		},
 		url: intelli.config.admin_url + '/affiliates/banners/'
 	}, false);
 

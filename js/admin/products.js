@@ -15,10 +15,6 @@ Ext.onReady(function()
 		],
 		expanderTemplate: '{description}',
 		fields: ['description', 'url'],
-		texts: {
-			delete_single: _t('are_you_sure_to_delete_this_product'),
-			delete_multiple: _t('are_you_sure_to_delete_selected_products')
-		},
 		url: intelli.config.admin_url + '/affiliates/products/'
 	}, false);
 

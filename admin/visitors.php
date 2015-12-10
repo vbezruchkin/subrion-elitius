@@ -1,37 +1,12 @@
 <?php
 //##copyright##
 
-$iaVisitor = $iaCore->factoryPackage('visitor', IA_CURRENT_PACKAGE, iaCore::ADMIN);
-
-$iaDb->setTable(iaVisitor::getTable());
-
-// process ajax actions
-if (iaView::REQUEST_JSON == $iaView->getRequestType())
+class iaBackendController extends iaAbstractControllerPackageBackend
 {
-	switch ($pageAction)
-	{
-		case iaCore::ACTION_READ:
-			$output = $iaVisitor->gridRead($_GET,
-				array('salt', 'member_id', 'product_id', 'referrer', 'datetime', 'tier'),
-				array('title' => 'like', 'status' => 'equal')
-			);
+	protected $_name = 'visitors';
 
-			break;
+	protected $_helperName = 'visitor';
 
-		case iaCore::ACTION_DELETE:
-			$output = $iaVisitor->gridDelete($_POST);
-	}
-
-	$iaView->assign($output);
+	protected $_gridColumns = '`salt`, `member_id`, `product_id`, `referrer`, `datetime`, `tier`, 1 `delete`';
+	protected $_gridFilters = array('status' => self::EQUAL, 'title' => self::LIKE);
 }
-
-// process html page actions
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	if (iaCore::ACTION_READ == $pageAction)
-	{
-		$iaView->grid('_IA_URL_packages/affiliates/js/admin/visitors');
-	}
-}
-
-$iaDb->resetTable();

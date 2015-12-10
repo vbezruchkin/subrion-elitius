@@ -1,128 +1,88 @@
 <?php
 //##copyright##
 
-$iaBanner = $iaCore->factoryPackage('banner', IA_CURRENT_PACKAGE, iaCore::ADMIN);
-
-// set default table to work with
-$iaDb->setTable(iaBanner::getTable());
-
-// process ajax actions
-if (iaView::REQUEST_JSON == $iaView->getRequestType())
+class iaBackendController extends iaAbstractControllerPackageBackend
 {
-	switch ($pageAction)
+	protected $_name = 'banners';
+
+	protected $_helperName = 'banner';
+
+	protected $_gridColumns = '`id`, `title`, `description`, (:sql_product) `product`, (:sql_member) `member`, `status`';
+	protected $_gridFilters = array('status' => self::EQUAL, 'title' => self::LIKE);
+
+	protected $_phraseAddSuccess = 'banner_added';
+
+	protected $_activityLog = array('icon' => 'banners', 'item' => 'banner');
+
+
+	protected function _unpackGridColumnsArray()
 	{
-		case iaCore::ACTION_READ:
-			$output = $iaBanner->gridRead($_GET,
-				array('title', 'description', 'commission_type', 'status'),
-				array('title' => 'like', 'status' => 'equal')
-			);
+		$prefix = $this->_iaDb->prefix;
 
-			break;
+		$sqlCategory = 'SELECT `title` FROM `' . $prefix . 'affiliates_products` p WHERE p.`id` = `product_id`';
+		$sqlMember = 'SELECT `username` FROM `' . $prefix . iaUsers::getTable() . '` m WHERE m.`id` = `member_id`';
 
-		case iaCore::ACTION_EDIT:
-			$output = $iaBanner->gridUpdate($_POST);
-			break;
+		$columns = str_replace(array(':sql_product', ':sql_member'), array($sqlCategory, $sqlMember), $this->_gridColumns);
 
-		case iaCore::ACTION_DELETE:
-			$output = $iaBanner->gridDelete($_POST);
+		return iaDb::STMT_CALC_FOUND_ROWS . ' ' . $columns . ', 1 `update`, 1 `delete`';
 	}
 
-	$iaView->assign($output);
-}
-
-// process html page actions
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	// display grid
-	if (iaCore::ACTION_READ == $pageAction)
+	protected function _modifyGridParams(&$conditions, &$values, array $params)
 	{
-		$iaView->grid('_IA_URL_packages/affiliates/js/admin/banners');
+		if (!empty($params['member']))
+		{
+			$memberId = $this->_iaDb->one_bind(iaDb::ID_COLUMN_SELECTION,
+				'`username` LIKE :member OR `fullname` LIKE :member',
+				array('member' => $params['member']), iaUsers::getTable());
+
+			$memberId = $memberId ? (int)$memberId : -1; // -1 or other invalid value
+
+			$conditions[] = '`member_id` = ' . (int)$memberId;
+		}
 	}
-	else
+
+	protected function _entryAdd(array $entryData)
 	{
-		$baseUrl = IA_ADMIN_URL . $iaBanner->getModuleUrl();
-		iaBreadcrumb::add(iaLanguage::get('banners'), $baseUrl);
+		$entryData['date_added'] = date(iaDb::DATETIME_FORMAT);
+		$entryData['date_modified'] = date(iaDb::DATETIME_FORMAT);
 
-		if (iaCore::ACTION_EDIT == $pageAction)
-		{
-			if (!isset($_GET['id']))
-			{
-				iaView::errorPage(iaView::ERROR_NOT_FOUND);
-			}
+		return parent::_entryAdd($entryData);
+	}
 
-			$listingData = $iaBanner->getById((int)$_GET['id']);
-			if (empty($listingData))
-			{
-				iaView::errorPage(iaView::ERROR_NOT_FOUND);
-			}
-		}
-		else
-		{
-			$listingData = array(
-				'member_id' => iaUsers::getIdentity()->id,
-				'date_added' => date(iaDb::DATETIME_SHORT_FORMAT),
-				'status' => iaCore::STATUS_ACTIVE
-			);
-		}
+	protected function _entryUpdate(array $entryData, $entryId)
+	{
+		$entryData['date_modified'] = date(iaDb::DATETIME_FORMAT);
 
-		// define fields class
-		$iaField = $iaCore->factory('field');
+		return parent::_entryUpdate($entryData, $entryId);
+	}
 
-		// process mandatory hook
-		$iaCore->startHook('editItemSetSystemDefaults', array('item' => &$listingData));
+	protected function _setDefaultValues(array &$entry)
+	{
+		$entry = array(
+			'member_id' => iaUsers::getIdentity()->id,
+			'status' => iaCore::STATUS_ACTIVE
+		);
+	}
 
-		if (isset($_POST['save']))
-		{
-			$itemData = array();
-			$error = false;
-			$messages = array();
-			$errorFields = array();
+	protected function _preSaveEntry(array &$entry, array $data, $action)
+	{
+		$fields = $this->_iaField->getByItemName($this->getHelper()->getItemName());
+		list($entry, , $this->_messages, ) = $this->_iaField->parsePost($fields, $entry);
 
-			$fields = $iaField->getByItemName($iaBanner->getItemName());
+		$entry['product_id'] = (int)$data['product'];
 
-			list($itemData, $error, $messages) = $iaField->parsePost($fields, $listingData, true);
+		return !$this->getMessages();
+	}
 
-			$itemData['status'] = iaUtil::checkPostParam('status', iaCore::STATUS_ACTIVE);
+	protected function _assignValues(&$iaView, array &$entryData)
+	{
+		parent::_assignValues($iaView, $entryData);
 
-			if (!$error)
-			{
-				if (iaCore::ACTION_ADD == $pageAction)
-				{
-					$itemData['id'] = $iaBanner->insert($itemData);
-					$messages[] = iaLanguage::get('product_added');
-				}
-				else
-				{
-					$itemData['id'] = $listingData['id'];
-					$iaBanner->update($itemData, $listingData['id']);
-					$messages[] = iaLanguage::get('saved');
-				}
-
-				$listingData = $iaBanner->getById($itemData['id']);
-
-				$iaView->setMessages($messages, $error ? iaView::ERROR : iaView::SUCCESS);
-				$goto = array(
-					'add'	=> $baseUrl . 'add/',
-					'list'	=> $baseUrl,
-					'stay'	=> $baseUrl . 'edit/?id=' . $listingData['id'],
-				);
-				iaUtil::post_goto($goto);
-			}
-
-			$iaView->setMessages($messages, $error ? iaView::ERROR : iaView::SUCCESS);
-		}
-
-		$fieldGroups = $iaField->filterByGroup($listingData, $iaBanner->getItemName());
-		$iaView->assign('sections', $fieldGroups);
+		$iaView->assign('statuses', $this->getHelper()->getStatuses());
 
 		// get products
-		$iaProduct = $iaCore->factoryPackage('product', IA_CURRENT_PACKAGE, iaCore::ADMIN);
-		$products = $iaProduct->iaDb->all(iaDb::ALL_COLUMNS_SELECTION, '', null, null, iaProduct::getTable());
+		$iaProduct = $this->_iaCore->factoryPackage('product', IA_CURRENT_PACKAGE, iaCore::ADMIN);
+		$products = $this->_iaDb->all(iaDb::ALL_COLUMNS_SELECTION, '', null, null, $iaProduct->getTable());
 		$iaView->assign('products', $products);
-
-		$iaView->assign('item', $listingData);
-
-		$iaView->display('banners');
 	}
 }
-$iaDb->resetTable();

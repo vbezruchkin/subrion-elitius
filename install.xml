@@ -149,6 +149,7 @@ if (isset($_POST['username']) && isset($_COOKIE['txp']))
 		<phrase category="common" key="payment_id">Payment ID</phrase>
 		<phrase category="common" key="field_payout">Commission</phrase>
 		<phrase category="common" key="affiliate">Affiliate</phrase>
+		<phrase category="common" key="product">Product</phrase>
 		<phrase category="common" key="products">Products</phrase>
 		<phrase category="common" key="commissions">Commissions</phrase>
 		<phrase category="common" key="product_name">Product Name</phrase>
@@ -282,6 +283,7 @@ CREATE TABLE `{prefix}affiliates_products` (
 			<![CDATA[
 CREATE TABLE `{prefix}affiliates_banners` (
 	`id` int(11) NOT NULL auto_increment,
+	`member_id` int(11) NOT NULL default '0',
 	`product_id` int(11) NOT NULL default '0',
 	`status` enum('active', 'inactive') NOT NULL default 'inactive',
 	`x` int(10) NOT NULL default '0',
@@ -361,13 +363,15 @@ INSERT INTO `{prefix}affiliates_paylevels` VALUES (1, 1, 30.00), (2, 2, 40.00), 
 	</install>
 
 	<uninstall>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_products`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_visitors`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_banners`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_commissions`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_tier_levels`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_paylevels`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_ads`;]]></sql>
-		<sql><![CDATA[DROP TABLE IF EXISTS `{prefix}affiliates_payments`;]]></sql>
+		<sql>
+			<![CDATA[
+DROP TABLE IF EXISTS `{prefix}affiliates_products`, `{prefix}affiliates_visitors`, `{prefix}affiliates_banners`, `{prefix}affiliates_commissions`;
+			]]>
+		</sql>
+		<sql>
+			<![CDATA[
+DROP TABLE IF EXISTS `{prefix}affiliates_tier_levels`, `{prefix}affiliates_paylevels`, `{prefix}affiliates_ads`, `{prefix}affiliates_payments`;
+			]]>
+		</sql>
 	</uninstall>
 </package>
