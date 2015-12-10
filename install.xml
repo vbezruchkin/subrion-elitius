@@ -4,9 +4,9 @@
 	<summary>This software adds an ability to track affiliate activity.</summary>
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
-	<version>3.1.0</version>
-	<date>2013-12-25</date>
-	<compatibility>3.1.0</compatibility>
+	<version>1.0.0</version>
+	<date>2015-12-02</date>
+	<compatibility>4.0</compatibility>
 	<url>affiliates</url>
 
 	<packageitems>
@@ -41,20 +41,9 @@
 
 		<page group="affiliates" menus="menu">Management</page>
 		<page group="affiliates" name="aff_products" menus="menu" url="affiliates/products/" filename="products">Products</page>
-		<page group="affiliates" name="aff_products_add" url="affiliates/products/add/" filename="products" parent="aff_products" action="add">Add Product</page>
-		<page group="affiliates" name="aff_products_edit" url="affiliates/products/edit/" filename="products" parent="aff_products" action="edit">Edit Product</page>
-
 		<page group="affiliates" name="aff_banners" menus="menu" url="affiliates/banners/" filename="banners">Banners</page>
-		<page group="affiliates" name="aff_banners_add" url="affiliates/banners/add/" filename="banners" parent="aff_banners" action="add">Add Banner</page>
-		<page group="affiliates" name="aff_banners_edit" url="affiliates/banners/edit/" filename="banners" parent="aff_banners" action="edit">Edit Banner</page>
-
 		<page group="affiliates" name="aff_ads" menus="menu" url="affiliates/ads/" filename="ads">Text ads</page>
-		<page group="affiliates" name="aff_ads_add" url="affiliates/ads/add/" filename="ads" parent="aff_ads" action="add">Add Ad</page>
-		<page group="affiliates" name="aff_ads_edit" url="affiliates/ads/edit/" filename="ads" parent="aff_ads" action="edit">Edit Ad</page>
-
 		<page group="affiliates" name="aff_commissions" menus="menu" url="affiliates/commissions/" filename="commissions">Commissions</page>
-		<page group="affiliates" name="aff_commissions_add" url="affiliates/commissions/add/" filename="commissions" parent="aff_commissions" action="add">Add Commission</page>
-		<page group="affiliates" name="aff_commissions_edit" url="affiliates/commissions/edit/" filename="commissions" parent="aff_commissions" action="edit">Edit Commission</page>
 
 		<page group="affiliates" menus="menu">Finances</page>
 		<page group="affiliates" name="aff_commissions_current" menus="menu" url="affiliates/commissions/current/" filename="commissions">Current commissions</page>

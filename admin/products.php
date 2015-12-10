@@ -1,122 +1,55 @@
 <?php
 //##copyright##
 
-$iaProduct = $iaCore->factoryPackage('product', IA_CURRENT_PACKAGE, iaCore::ADMIN);
-
-// set default table to work with
-$iaDb->setTable(iaProduct::getTable());
-
-// process ajax actions
-if (iaView::REQUEST_JSON == $iaView->getRequestType())
+class iaBackendController extends iaAbstractControllerPackageBackend
 {
-	switch ($pageAction)
+	protected $_name = 'products';
+
+	protected $_helperName = 'product';
+
+	protected $_gridColumns = '`id`, `title`, `description`, `amount`, `url`, `commission_type`, `status`, 1 `update`, 1 `delete`';
+	protected $_gridFilters = array('status' => self::EQUAL, 'title' => self::LIKE);
+
+	protected $_phraseAddSuccess = 'product_added';
+
+	protected $_activityLog = array('icon' => 'products', 'item' => 'product');
+
+
+	protected function _entryAdd(array $entryData)
 	{
-		case iaCore::ACTION_READ:
-			$output = $iaProduct->gridRead($_GET,
-				array('title', 'description', 'url', 'amount', 'commission_type', 'status'),
-				array('title' => 'like', 'status' => 'equal')
-			);
+		$entryData['date_added'] = date(iaDb::DATETIME_FORMAT);
+		$entryData['date_modified'] = date(iaDb::DATETIME_FORMAT);
 
-			break;
-
-		case iaCore::ACTION_EDIT:
-			$output = $iaProduct->gridUpdate($_POST);
-			break;
-
-		case iaCore::ACTION_DELETE:
-			$output = $iaProduct->gridDelete($_POST);
+		return parent::_entryAdd($entryData);
 	}
 
-	$iaView->assign($output);
-}
-
-// process html page actions
-if (iaView::REQUEST_HTML == $iaView->getRequestType())
-{
-	// display grid
-	if (iaCore::ACTION_READ == $pageAction)
+	protected function _entryUpdate(array $entryData, $entryId)
 	{
-		$iaView->grid('_IA_URL_packages/affiliates/js/admin/products');
+		$entryData['date_modified'] = date(iaDb::DATETIME_FORMAT);
+
+		return parent::_entryUpdate($entryData, $entryId);
 	}
-	else
+
+	protected function _setDefaultValues(array &$entry)
 	{
-		$baseUrl = IA_ADMIN_URL . $iaProduct->getModuleUrl();
-		iaBreadcrumb::add(iaLanguage::get('products'), $baseUrl);
+		$entry = array(
+			'member_id' => iaUsers::getIdentity()->id,
+			'status' => iaCore::STATUS_ACTIVE
+		);
+	}
 
-		if (iaCore::ACTION_EDIT == $pageAction)
-		{
-			if (!isset($_GET['id']))
-			{
-				iaView::errorPage(iaView::ERROR_NOT_FOUND);
-			}
+	protected function _preSaveEntry(array &$entry, array $data, $action)
+	{
+		$fields = $this->_iaField->getByItemName($this->getHelper()->getItemName());
+		list($entry, , $this->_messages, ) = $this->_iaField->parsePost($fields, $entry);
 
-			$listingData = $iaProduct->getById((int)$_GET['id']);
-			if (empty($listingData))
-			{
-				iaView::errorPage(iaView::ERROR_NOT_FOUND);
-			}
-		}
-		else
-		{
-			$listingData = array(
-				'member_id' => iaUsers::getIdentity()->id,
-				'date_added' => date(iaDb::DATETIME_SHORT_FORMAT),
-				'status' => iaCore::STATUS_ACTIVE
-			);
-		}
+		return !$this->getMessages();
+	}
 
-		// define fields class
-		$iaField = $iaCore->factory('field');
+	protected function _assignValues(&$iaView, array &$entryData)
+	{
+		parent::_assignValues($iaView, $entryData);
 
-		// process mandatory hook
-		$iaCore->startHook('editItemSetSystemDefaults', array('item' => &$listingData));
-
-		if (isset($_POST['save']))
-		{
-			$itemData = array();
-			$error = false;
-			$messages = array();
-
-			$fields = $iaField->getByItemName($iaProduct->getItemName());
-
-			list($itemData, $error, $messages) = $iaField->parsePost($fields, $listingData, true);
-
-			$itemData['status'] = iaUtil::checkPostParam('status', iaCore::STATUS_ACTIVE);
-
-			if (!$error)
-			{
-				if (iaCore::ACTION_ADD == $pageAction)
-				{
-					$itemData['id'] = $iaProduct->insert($itemData);
-					$messages[] = iaLanguage::get('product_added');
-				}
-				else
-				{
-					$itemData['id'] = $listingData['id'];
-					$iaProduct->update($itemData, $listingData['id']);
-					$messages[] = iaLanguage::get('saved');
-				}
-
-				$listingData = $iaProduct->getById($itemData['id']);
-
-				$iaView->setMessages($messages, $error ? iaView::ERROR : iaView::SUCCESS);
-				$goto = array(
-					'add'	=> $baseUrl . 'add/',
-					'list'	=> $baseUrl,
-					'stay'	=> $baseUrl . 'edit/?id=' . $listingData['id'],
-				);
-				iaUtil::post_goto($goto);
-			}
-
-			$iaView->setMessages($messages, $error ? iaView::ERROR : iaView::SUCCESS);
-		}
-
-		$fieldGroups = $iaField->filterByGroup($listingData, $iaProduct->getItemName());
-		$iaView->assign('sections', $fieldGroups);
-
-		$iaView->assign('item', $listingData);
-
-		$iaView->display('products');
+		$iaView->assign('statuses', $this->getHelper()->getStatuses());
 	}
 }
-$iaDb->resetTable();
