@@ -14,6 +14,8 @@ class iaBackendController extends iaAbstractControllerPackageBackend
 
 	protected $_activityLog = array('icon' => 'banners', 'item' => 'banner');
 
+	protected $_setQuickSearch = false;
+
 
 	protected function _unpackGridColumnsArray()
 	{

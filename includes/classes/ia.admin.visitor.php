@@ -7,11 +7,14 @@ class iaVisitor extends abstractAffiliatesPackageAdmin
 
 	protected $_itemName = 'visitors';
 
+	protected $_statuses = array(self::STATUS_VALID, self::STATUS_EXPIRED);
+
 	protected $_activityLog = array('item' => 'visitor');
 
 	protected $_moduleUrl = 'affiliates/visitors/';
 
 	public $dashboardStatistics = array('icon' => 'visitors');
+
 
 	public function gridRead($params, $columns, array $filterParams = array(), array $persistentConditions = array())
 	{

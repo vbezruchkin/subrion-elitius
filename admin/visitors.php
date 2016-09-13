@@ -7,8 +7,10 @@ class iaBackendController extends iaAbstractControllerPackageBackend
 
 	protected $_helperName = 'visitor';
 
-	protected $_gridColumns = '`salt`, `referrer`, `datetime`, `ip`, `tier`, (:sql_product) `product`, (:sql_member) `member`, 1 `delete`';
+	protected $_gridColumns = '`salt`, `referrer`, `datetime`, INET_NTOA(`ip`) `ip`, `tier`, `status`, (:sql_product) `product`, (:sql_member) `member`, 1 `delete`';
 	protected $_gridFilters = array('status' => self::EQUAL, 'title' => self::LIKE);
+
+	protected $_setQuickSearch = false;
 
 
 	protected function _unpackGridColumnsArray()

@@ -5,7 +5,7 @@
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
 	<version>1.0.0</version>
-	<date>2015-12-02</date>
+	<date>2016-09-10</date>
 	<compatibility>4.0</compatibility>
 	<url>affiliates</url>
 
@@ -16,7 +16,7 @@
 	</packageitems>
 
 	<actions>
-		<action name="aff_products" url="affiliates/products/" icon="list" show="" status="admin" pages="aff_accounts_history,aff_products_add,aff_products_edit">Products</action>
+		<action name="aff_products" url="affiliates/products/" icon="list" show="" status="admin" pages="aff_payments,aff_products_add,aff_products_edit">Products</action>
 		<action name="aff_products_add" url="affiliates/products/add/" icon="plus-alt" order="2" show="" status="admin" pages="aff_products,aff_products_edit">Add Product</action>
 
 		<action name="aff_banners" url="affiliates/banners/" icon="list" show="" status="admin" pages="aff_banners_add,aff_banners_edit">Banners</action>
@@ -42,21 +42,17 @@
 		<page group="affiliates" menus="menu">Finances</page>
 		<page group="affiliates" name="aff_commissions_current" menus="menu" url="affiliates/commissions/current/" filename="commissions">Current commissions</page>
 		<page group="affiliates" name="aff_pay_affiliates" menus="menu" url="affiliates/pay/" filename="pay">Pay affiliates</page>
-		<page group="affiliates" name="aff_accounts_history" menus="menu" url="affiliates/members/history/" filename="account_history">Accounts history</page>
+		<page group="affiliates" name="aff_payments" menus="menu" url="affiliates/payments/" filename="payments">Payments</page>
 	</adminpages>
 
 	<pages>
-		<page group="affiliates" readonly="1" url="|PACKAGE|" name="affiliates_home" menus="account" service="1">General Statistics</page>
+		<page group="affiliates" url="|PACKAGE|" name="affiliates_home" menus="account" service="1">General Statistics</page>
 		<page group="affiliates" url="|PACKAGE|commissions/" name="affiliates_commissions" filename="index" menus="account">Commissions</page>
 		<page group="affiliates" url="|PACKAGE|payments/" name="affiliates_payments" filename="index" menus="account">Payments</page>
 		<page group="affiliates" url="|PACKAGE|traffic/" name="affiliates_traffic" filename="index" menus="account">Traffic log</page>
 
-		<page group="affiliates" readonly="1" url="|PACKAGE|track/" name="affiliates_tracking" filename="tracking" service="1">Tracking</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|exp/" name="affiliates_reffer" filename="xp" service="1">eLitius</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|pgw/" name="affiliates_pgw" filename="pgw" service="1">Payment gateway</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|txp/" name="affiliates_tierreffer" filename="txp" service="1">eLitius</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|xpads/" name="affiliates_javascript" filename="xpads" service="1">eLitius</page>
-		<page group="affiliates" readonly="1" url="|PACKAGE|banners/" name="affiliates_banners" filename="banners" menus="elitius" service="1">Banners</page>
+		<page group="affiliates" url="|PACKAGE|banners/" name="affiliates_banners" filename="banners" menus="affiliates">Banners</page>
+		<page group="affiliates" url="|PACKAGE|track/" name="affiliates_tracking" filename="tracking" readonly="1" service="1">Tracking</page>
 	</pages>
 
 	<configgroup name="affiliates">Affiliates</configgroup>
@@ -70,7 +66,7 @@
 	<config group="affiliates" name="aff_payout_balance" type="text" description="Payout balance required">10</config>
 
 	<hooks>
-		<hook name="phpUsersRegisterAfterAll" type="php">
+		<hook name="phpUserLogin" type="php">
 			<![CDATA[
 if (isset($_POST['username']) && isset($_COOKIE['txp']))
 {
@@ -203,15 +199,18 @@ if (isset($_POST['username']) && isset($_COOKIE['txp']))
 
 		<field item="products" group="general" name="title" type="text" length="50" searchable="1" required="1">Title</field>
 		<field item="products" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
+		<field item="products" group="general" name="product_image" type="image" width="350" height="350" thumb_width="100" thumb_height="100" editable="0">Product Image</field>
 		<field item="products" group="general" name="url" type="text" length="255">Redirect URL</field>
 		<field item="products" group="general" name="amount" type="number" default="10" length="50" required="1">Amount</field>
 		<field item="products" group="general" name="commission_type" type="combo" values="%||%,$||$" default="%" required="1">Commissions type</field>
 		<field item="products" group="general" name="auto" type="radio" values="1||Yes,0||No" default="1">Auto-approve commissions</field>
 
-		<field item="banners" group="general" name="type" type="combo" values="banner||Banner,peel||Page peel,text||Text ad,qrcode||QR code" relation="parent" required="1">Type</field>
+		<field item="banners" group="general" name="type" type="combo" values="banner||Banner,peel||Page peel,text||Text ad,lightbox||Lightbox,qrcode||QR code" relation="parent" required="1">Type</field>
 		<field item="banners" group="general" name="title" type="text" length="50" searchable="1" required="1">Title</field>
 		<field item="banners" group="general" name="description" type="textarea" editor="1" length="1000">Description</field>
 		<field item="banners" group="general" name="image" type="image" required="1" relation="dependent" parent="type:banner">Image</field>
+		<field item="banners" group="general" name="image_width" type="number" default="300" length="50" required="1" parent="type:banner">Image width</field>
+		<field item="banners" group="general" name="image_height" type="number" default="300" length="50" required="1" parent="type:banner">Image height</field>
 
 		<field item="commissions" group="general" name="sale_amount" type="number" default="10" length="50" required="1">Sale amount</field>
 		<field item="commissions" group="general" name="payout_amount" type="number" default="10" length="50" required="1">Payout amount</field>
@@ -310,7 +309,7 @@ CREATE TABLE `{prefix}affiliates_tier_levels` (
 	`id` int( 10 ) NOT NULL AUTO_INCREMENT ,
 	`level` int( 10 ) NOT NULL default '0',
 	`amt` decimal( 10, 2 ) NOT NULL default '0.00',
-PRIMARY KEY ( `id` ) 
+PRIMARY KEY ( `id` )
 ) {mysql_version};
 			]]>
 		</sql>

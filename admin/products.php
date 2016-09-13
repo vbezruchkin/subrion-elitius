@@ -14,6 +14,7 @@ class iaBackendController extends iaAbstractControllerPackageBackend
 
 	protected $_activityLog = array('icon' => 'products', 'item' => 'product');
 
+	protected $_setQuickSearch = false;
 
 	protected function _entryAdd(array $entryData)
 	{

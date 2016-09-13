@@ -8,11 +8,12 @@ Ext.onReady(function()
 			{name: 'product', title: _t('product'), width: 2},
 			{name: 'salt', title: _t('visitor_id'), width: 220},
 			{name: 'referrer', title: _t('refererring_url'), width: 220},
-			{name: 'datetime', title: _t('date'), width: 100},
-			{name: 'ip', title: _t('ip_address'), width: 100},
+			{name: 'datetime', title: _t('date'), width: 130},
+			{name: 'ip', title: _t('ip_address'), width: 120},
 			{name: 'status', title: _t('status'), width: 120},
 			'delete'
 		],
+		statuses: ['valid', 'expired'],
 		url: intelli.config.admin_url + '/affiliates/visitors/'
 	}, false);
 

@@ -1,3 +1,34 @@
+<h2>{lang key='products'}</h2>
+{if $products}
+	<table class="table table-bordered table-striped">
+		<thead>
+		<tr>
+			<th></th>
+			<th>{lang key='title'}</th>
+			<th>{lang key='commission_type'}</th>
+		</tr>
+		</thead>
+	{foreach $products as $product}
+		<tr>
+			<td> </td>
+			<td>{$product.title}</td>
+			<td>{$product.amount} {$product.commission_type}</td>
+		</tr>
+	{/foreach}
+	</table>
+{/if}
+
+{foreach $banners as $banner}
+	{switch $banner.type}
+		{case 'banner'}
+			{break}
+		{case 'text'}
+			{break}
+	{/switch}
+{foreachelse}
+
+{/foreach}
+
 {if $etype eq 'banners' || $etype eq 'ads'}
 	{if $mod eq 'list'}
 		<h2>{lang key=$etype}</h2>

@@ -66,11 +66,7 @@ Ext.onReady(function()
 	if (intelli.urlVal('status'))
 	{
 		Ext.getCmp('stsFilter').setValue(intelli.urlVal('status'));
-	}
 
-	var search = intelli.urlVal('quick_search');
-	if (null != search)
-	{
-		Ext.getCmp('searchTitle').setValue(search);
+		intelli.gridHelper.search(intelli.banners);
 	}
 });

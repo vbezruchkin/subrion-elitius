@@ -1,3 +1,8 @@
+<strong>Affiliate link</strong>
+<div class="well">
+	{$core.packages.affiliates.url}track/{$member.id}/
+</div>
+
 <table class="table table-striped">
 	<tr><th colspan="2"><b>{lang key="traffic_stat"}</b></th></tr>
 	<tr>
